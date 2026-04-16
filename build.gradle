@@ -22,12 +22,20 @@ ext {
 	set('springCloudVersion', "2025.1.1")
 }
 
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
@@ -38,6 +46,7 @@ dependencyManagement {
 }
 
 contracts {
+	packageWithBaseClasses("com.fonseca.algashop.product.catalog.contract.base")
 }
 
 tasks.named('contractTest') {
