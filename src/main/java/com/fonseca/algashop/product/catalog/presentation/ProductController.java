@@ -2,7 +2,6 @@ package com.fonseca.algashop.product.catalog.presentation;
 
 import com.fonseca.algashop.product.catalog.application.product.management.ProductInput;
 import com.fonseca.algashop.product.catalog.application.product.management.ProductManagementApplicationService;
-import com.fonseca.algashop.product.catalog.application.product.query.CategoryMinimalOutput;
 import com.fonseca.algashop.product.catalog.application.product.query.PageModel;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutput;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductQueryService;
@@ -11,9 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,6 +26,18 @@ public class ProductController {
 
         UUID productId = productManagementApplicationService.create(input);
         return productQueryService.findById(productId);
+    }
+
+    @PutMapping("/{productId}")
+    public ProductDetailOutput update(@PathVariable UUID productId, @RequestBody @Valid ProductInput input) {
+        productManagementApplicationService.update(productId, input);
+        return productQueryService.findById(productId);
+    }
+
+    @DeleteMapping("/{productId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID productId) {
+        productManagementApplicationService.disable(productId);
     }
 
     @GetMapping("/{productId}")

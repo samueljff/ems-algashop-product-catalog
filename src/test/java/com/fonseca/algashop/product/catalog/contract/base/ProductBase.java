@@ -3,7 +3,10 @@ package com.fonseca.algashop.product.catalog.contract.base;
 import com.fonseca.algashop.product.catalog.application.ResourceNotFoundException;
 import com.fonseca.algashop.product.catalog.application.product.management.ProductInput;
 import com.fonseca.algashop.product.catalog.application.product.management.ProductManagementApplicationService;
-import com.fonseca.algashop.product.catalog.application.product.query.*;
+import com.fonseca.algashop.product.catalog.application.product.query.PageModel;
+import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutput;
+import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutputTestDataBuilder;
+import com.fonseca.algashop.product.catalog.application.product.query.ProductQueryService;
 import com.fonseca.algashop.product.catalog.presentation.ProductController;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,12 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;
-import java.nio.file.ProviderNotFoundException;
 import java.util.List;
 import java.util.UUID;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 
 @WebMvcTest(controllers = ProductController.class)
 public class ProductBase {
@@ -34,6 +40,7 @@ public class ProductBase {
     private static final UUID validProductId = UUID.fromString("fffe6ec2-7103-48b3-8e4f-3b58e43fb75a");
     private static final UUID createdProductId = UUID.fromString("21651a12-b126-4213-ac21-19f66ff4642e");
     private static final UUID invalidProductId = UUID.fromString("550e8400-e29b-41d4-a716-446655440000");
+    private static final UUID notFoundProductId = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
     @BeforeEach
     void setup() {
@@ -45,6 +52,32 @@ public class ProductBase {
         mockFilterProducts();
         mockCreateProduct();
         mockInvalidProductFindById();
+        mockUpdateProduct();
+        mockDeleteProduct();
+        mockUpdateProductNotFound();
+        mockDeleteProductNotFound();
+    }
+
+    private void mockDeleteProductNotFound() {
+        Mockito.doThrow(new ResourceNotFoundException())
+            .when(productManagementApplicationService)
+            .disable(eq(notFoundProductId));
+    }
+
+    private void mockUpdateProductNotFound() {
+        Mockito.doThrow(new ResourceNotFoundException())
+            .when(productManagementApplicationService)
+            .update(eq(notFoundProductId), any(ProductInput.class));
+    }
+
+    private void mockDeleteProduct() {
+        Mockito.doNothing().when(productManagementApplicationService)
+            .disable(validProductId);
+    }
+
+    private void mockUpdateProduct() {
+        Mockito.doNothing().when(productManagementApplicationService)
+            .update(eq(validProductId), any(ProductInput.class));
     }
 
     private void mockInvalidProductFindById() {
