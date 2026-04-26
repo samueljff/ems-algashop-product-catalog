@@ -3,7 +3,7 @@ package com.fonseca.algashop.product.catalog.contract.base;
 import com.fonseca.algashop.product.catalog.application.ResourceNotFoundException;
 import com.fonseca.algashop.product.catalog.application.product.management.ProductInput;
 import com.fonseca.algashop.product.catalog.application.product.management.ProductManagementApplicationService;
-import com.fonseca.algashop.product.catalog.application.product.query.PageModel;
+import com.fonseca.algashop.product.catalog.application.PageModel;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutput;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutputTestDataBuilder;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductQueryService;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;

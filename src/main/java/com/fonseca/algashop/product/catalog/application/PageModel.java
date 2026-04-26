@@ -1,4 +1,4 @@
-package com.fonseca.algashop.product.catalog.application.product.query;
+package com.fonseca.algashop.product.catalog.application;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

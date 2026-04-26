@@ -2,7 +2,7 @@ package com.fonseca.algashop.product.catalog.presentation;
 
 import com.fonseca.algashop.product.catalog.application.product.management.ProductInput;
 import com.fonseca.algashop.product.catalog.application.product.management.ProductManagementApplicationService;
-import com.fonseca.algashop.product.catalog.application.product.query.PageModel;
+import com.fonseca.algashop.product.catalog.application.PageModel;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutput;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductQueryService;
 import jakarta.validation.Valid;
