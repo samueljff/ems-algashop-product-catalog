@@ -4,7 +4,7 @@ import com.fonseca.algashop.product.catalog.application.category.managment.Categ
 import com.fonseca.algashop.product.catalog.application.category.managment.CategoryManagementService;
 import com.fonseca.algashop.product.catalog.application.category.query.CategoryDetailOutput;
 import com.fonseca.algashop.product.catalog.application.category.query.CategoryQueryService;
-import com.fonseca.algashop.product.catalog.application.PageModel;
+import com.fonseca.algashop.product.catalog.application.utility.PageModel;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

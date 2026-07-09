@@ -1,6 +1,6 @@
 package com.fonseca.algashop.product.catalog.application.category.query;
 
-import com.fonseca.algashop.product.catalog.application.PageModel;
+import com.fonseca.algashop.product.catalog.application.utility.PageModel;
 
 import java.util.UUID;
 

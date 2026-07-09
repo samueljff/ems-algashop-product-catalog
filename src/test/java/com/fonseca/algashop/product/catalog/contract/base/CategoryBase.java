@@ -1,6 +1,6 @@
 package com.fonseca.algashop.product.catalog.contract.base;
 
-import com.fonseca.algashop.product.catalog.application.PageModel;
+import com.fonseca.algashop.product.catalog.application.utility.PageModel;
 import com.fonseca.algashop.product.catalog.application.ResourceNotFoundException;
 import com.fonseca.algashop.product.catalog.application.category.managment.CategoryInput;
 import com.fonseca.algashop.product.catalog.application.category.managment.CategoryManagementService;
