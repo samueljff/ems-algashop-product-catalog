@@ -39,9 +39,15 @@ public class ProductController {
         return productQueryService.findById(productId);
     }
 
-    @DeleteMapping("/{productId}")
+    @PutMapping("/{productId}/enable")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable UUID productId) {
+    public void enable(@PathVariable UUID productId) {
+        productManagementApplicationService.enable(productId);
+    }
+
+    @DeleteMapping("/{productId}/enable")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void disable(@PathVariable UUID productId) {
         productManagementApplicationService.disable(productId);
     }
 

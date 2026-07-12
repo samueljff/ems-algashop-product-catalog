@@ -15,13 +15,13 @@ import java.util.UUID;
 @NoArgsConstructor
 public class ProductDetailOutput {
     private UUID id;
-    private OffsetDateTime addedAt;
     private String name;
     private String brand;
     private BigDecimal regularPrice;
     private BigDecimal salePrice;
     private Boolean inStock;
     private Boolean enabled;
+    private OffsetDateTime addedAt;
     private CategoryMinimalOutput category;
     private String description;
 }

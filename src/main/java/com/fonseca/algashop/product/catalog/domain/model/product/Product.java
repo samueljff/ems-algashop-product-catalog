@@ -69,6 +69,7 @@ public class Product {
         if (StringUtils.isEmpty(brand)) {
             throw new IllegalArgumentException();
         }
+        this.brand = brand;
     }
 
     public void setDescription(String description) {
@@ -129,6 +130,6 @@ public class Product {
         if (quantityInStock < 0) {
             throw new IllegalArgumentException();
         }
-        this.quantityInStock =quantityInStock;
+        this.quantityInStock = quantityInStock;
     }
 }
