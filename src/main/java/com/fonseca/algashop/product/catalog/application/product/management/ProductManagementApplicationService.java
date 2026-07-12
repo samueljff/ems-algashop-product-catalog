@@ -1,6 +1,5 @@
 package com.fonseca.algashop.product.catalog.application.product.management;
 
-import com.fonseca.algashop.product.catalog.application.ResourceNotFoundException;
 import com.fonseca.algashop.product.catalog.domain.model.category.Category;
 import com.fonseca.algashop.product.catalog.domain.model.category.CategoryNotFoundException;
 import com.fonseca.algashop.product.catalog.domain.model.category.CategoryRepository;
@@ -35,6 +34,7 @@ public class ProductManagementApplicationService {
             .regularPrice(input.getRegularPrice())
             .salePrice(input.getSalePrice())
             .enabled(input.getEnabled())
+            .category(category)
             .build();
     }
 
@@ -43,6 +43,7 @@ public class ProductManagementApplicationService {
         Category category = findCategory(input.getCategoryId());
         
         updateProduct(product, input);
+        product.setCategory(category);
 
         productRepository.save(product);
     }
