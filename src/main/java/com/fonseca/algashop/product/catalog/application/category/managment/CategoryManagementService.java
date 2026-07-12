@@ -2,6 +2,7 @@ package com.fonseca.algashop.product.catalog.application.category.managment;
 
 import com.fonseca.algashop.product.catalog.application.ResourceNotFoundException;
 import com.fonseca.algashop.product.catalog.domain.model.category.Category;
+import com.fonseca.algashop.product.catalog.domain.model.category.CategoryNotFoundException;
 import com.fonseca.algashop.product.catalog.domain.model.category.CategoryRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +23,15 @@ public class CategoryManagementService {
     }
 
     public void update(UUID categoryId, CategoryInput input) {
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException());
+        Category category = categoryRepository.findById(categoryId)
+            .orElseThrow(() -> new CategoryNotFoundException(categoryId));
         category.setName(input.getName());
         category.setEnabled(input.getEnabled());
         categoryRepository.save(category);
     }
 
     public void disable(UUID categoryId) {
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException());
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException(categoryId));
         category.setEnabled(false);
         categoryRepository.save(category);
     }

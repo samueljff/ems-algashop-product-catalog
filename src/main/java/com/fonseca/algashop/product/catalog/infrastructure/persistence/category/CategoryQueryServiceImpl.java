@@ -6,6 +6,7 @@ import com.fonseca.algashop.product.catalog.application.category.query.CategoryQ
 import com.fonseca.algashop.product.catalog.application.utility.Mapper;
 import com.fonseca.algashop.product.catalog.application.utility.PageModel;
 import com.fonseca.algashop.product.catalog.domain.model.category.Category;
+import com.fonseca.algashop.product.catalog.domain.model.category.CategoryNotFoundException;
 import com.fonseca.algashop.product.catalog.domain.model.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class CategoryQueryServiceImpl implements CategoryQueryService {
 
     @Override
     public CategoryDetailOutput findById(UUID categoryId) {
-        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException());
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException(categoryId));
         return mapper.convert(category, CategoryDetailOutput.class);
     }
 }
