@@ -7,5 +7,5 @@ import java.util.UUID;
 public interface ProductQueryService {
 
     ProductDetailOutput findById(UUID productId);
-    PageModel<ProductSumaryOutput> filter(Integer size, Integer number);
+    PageModel<ProductSummaryOutput> filter(Integer size, Integer number);
 }

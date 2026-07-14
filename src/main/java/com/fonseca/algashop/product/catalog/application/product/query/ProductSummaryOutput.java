@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductSumaryOutput {
+public class ProductSummaryOutput {
     private UUID id;
     private String name;
     private String brand;
