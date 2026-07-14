@@ -4,6 +4,7 @@ import com.fonseca.algashop.product.catalog.application.product.management.Produ
 import com.fonseca.algashop.product.catalog.application.product.management.ProductManagementApplicationService;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutput;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductQueryService;
+import com.fonseca.algashop.product.catalog.application.product.query.ProductSumaryOutput;
 import com.fonseca.algashop.product.catalog.application.utility.PageModel;
 import com.fonseca.algashop.product.catalog.domain.model.category.CategoryNotFoundException;
 import jakarta.validation.Valid;
@@ -58,7 +59,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public PageModel<ProductDetailOutput> filter(
+    public PageModel<ProductSumaryOutput> filter(
         @RequestParam(name = "size", required = false) Integer size,
         @RequestParam(name = "number", required = false) Integer number
     ) {

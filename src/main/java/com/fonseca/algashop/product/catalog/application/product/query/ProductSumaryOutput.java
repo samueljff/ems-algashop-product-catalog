@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDetailOutput {
+public class ProductSumaryOutput {
     private UUID id;
     private String name;
     private String brand;
@@ -23,7 +23,7 @@ public class ProductDetailOutput {
     private Boolean enabled;
     private OffsetDateTime addedAt;
     private CategoryMinimalOutput category;
-    private String description;
+    private String shortDescription;
     private String slug;
     private Boolean hasDiscount;
     private Integer quantityInStock;

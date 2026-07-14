@@ -3,6 +3,7 @@ package com.fonseca.algashop.product.catalog.infrastructure.persistence.product;
 import com.fonseca.algashop.product.catalog.application.ResourceNotFoundException;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutput;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductQueryService;
+import com.fonseca.algashop.product.catalog.application.product.query.ProductSumaryOutput;
 import com.fonseca.algashop.product.catalog.application.utility.Mapper;
 import com.fonseca.algashop.product.catalog.application.utility.PageModel;
 import com.fonseca.algashop.product.catalog.domain.model.product.Product;
@@ -27,7 +28,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     }
 
     @Override
-    public PageModel<ProductDetailOutput> filter(Integer size, Integer number) {
+    public PageModel<ProductSumaryOutput> filter(Integer size, Integer number) {
         return null;
     }
 }
