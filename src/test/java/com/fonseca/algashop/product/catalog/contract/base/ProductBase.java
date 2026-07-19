@@ -7,6 +7,7 @@ import com.fonseca.algashop.product.catalog.application.product.management.Produ
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutput;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutputTestDataBuilder;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductQueryService;
+import com.fonseca.algashop.product.catalog.infrastructure.persistence.product.ProductFilter;
 import com.fonseca.algashop.product.catalog.presentation.ProductController;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.jupiter.api.BeforeEach;
@@ -105,12 +106,13 @@ public class ProductBase {
     }
 
     private void mockFilterProducts() {
-        Mockito.when(productQueryService.filter(Mockito.anyInt(), Mockito.anyInt()))
-            .then((answer) -> {
-                Integer size = answer.getArgument(0);
+        Mockito.when(productQueryService.filter(Mockito.any(ProductFilter.class)))
+            .thenAnswer(answer -> {
+                ProductFilter filter = answer.getArgument(0);
+
                 return PageModel.<ProductDetailOutput>builder()
-                    .number(0)
-                    .size(size)
+                    .number(filter.getPage()) // usa o page do filtro
+                    .size(filter.getSize())   // usa o size do filtro
                     .totalPages(1)
                     .totalElements(2)
                     .content(
