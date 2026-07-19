@@ -48,7 +48,7 @@ configurations {
 		extendsFrom annotationProcessor
 	}
 	asciidoctorExt
-	mockitoAgent{transitive = false}
+	mockitoAgent {transitive = false}
 }
 
 dependencies {
