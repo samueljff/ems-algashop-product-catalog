@@ -7,6 +7,7 @@ import com.fonseca.algashop.product.catalog.application.product.query.ProductQue
 import com.fonseca.algashop.product.catalog.application.product.query.ProductSummaryOutput;
 import com.fonseca.algashop.product.catalog.application.utility.PageModel;
 import com.fonseca.algashop.product.catalog.domain.model.category.CategoryNotFoundException;
+import com.fonseca.algashop.product.catalog.infrastructure.persistence.product.ProductFilter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -59,11 +60,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public PageModel<ProductSummaryOutput> filter(
-        @RequestParam(name = "size", required = false) Integer size,
-        @RequestParam(name = "page", required = false) Integer page
-    ) {
+    public PageModel<ProductSummaryOutput> filter(ProductFilter productFilter) {
 
-        return productQueryService.filter(size, page);
+        return productQueryService.filter(productFilter);
     }
 }
