@@ -1,6 +1,7 @@
 package com.fonseca.algashop.product.catalog.infrastructure.persistence.product;
 
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutput;
+import com.fonseca.algashop.product.catalog.application.product.query.ProductFilter;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductQueryService;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductSummaryOutput;
 import com.fonseca.algashop.product.catalog.application.utility.Mapper;

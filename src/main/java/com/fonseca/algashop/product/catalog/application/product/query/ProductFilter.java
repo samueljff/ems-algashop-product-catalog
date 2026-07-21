@@ -1,4 +1,4 @@
-package com.fonseca.algashop.product.catalog.infrastructure.persistence.product;
+package com.fonseca.algashop.product.catalog.application.product.query;
 
 import com.fonseca.algashop.product.catalog.application.utility.SortablePageFilter;
 import lombok.*;

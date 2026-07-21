@@ -7,7 +7,7 @@ import com.fonseca.algashop.product.catalog.application.product.management.Produ
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutput;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutputTestDataBuilder;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductQueryService;
-import com.fonseca.algashop.product.catalog.infrastructure.persistence.product.ProductFilter;
+import com.fonseca.algashop.product.catalog.application.product.query.ProductFilter;
 import com.fonseca.algashop.product.catalog.presentation.ProductController;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.jupiter.api.BeforeEach;
