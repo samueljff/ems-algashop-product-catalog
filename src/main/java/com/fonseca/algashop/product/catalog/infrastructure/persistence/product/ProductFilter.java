@@ -20,7 +20,7 @@ public class ProductFilter extends SortablePageFilter<ProductFilter.SortType> {
     private Boolean inStock;
     private BigDecimal priceFrom;
     private BigDecimal priceTo;
-    private UUID categoriesId;
+    private UUID[] categoriesId;
     private OffsetDateTime addedAtFrom;
     private OffsetDateTime addedAtTo;
 
