@@ -10,6 +10,7 @@ import com.fonseca.algashop.product.catalog.domain.model.product.Product;
 import com.fonseca.algashop.product.catalog.domain.model.product.ProductNotFoundException;
 import com.fonseca.algashop.product.catalog.domain.model.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -32,6 +33,8 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     private final ProductRepository productRepository;
     private final Mapper mapper;
     private final MongoOperations mongoOperations;
+//    private static final String findWordRegex = "(?i)(?<= |^)%s(?= |$)";
+    private static final String findWordRegex = "(?i)%s";
 
     @Override
     public ProductDetailOutput findById(UUID productId) {
@@ -81,7 +84,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
             query.addCriteria(Criteria.where("enabled").is(filter.getEnabled()));
         }
 
-        if  (filter.getAddedAtFrom() != null && filter.getAddedAtTo() != null) {
+        if (filter.getAddedAtFrom() != null && filter.getAddedAtTo() != null) {
             query.addCriteria(Criteria.where("addedAt")
                 .gte(filter.getAddedAtFrom())
                 .lte(filter.getAddedAtTo()));
@@ -100,7 +103,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
         } else {
             if (filter.getPriceFrom() != null) {
                 query.addCriteria(Criteria.where("salePrice").gte(filter.getPriceFrom()));
-            }  else if (filter.getPriceTo() != null) {
+            } else if (filter.getPriceTo() != null) {
                 query.addCriteria(Criteria.where("salePrice").lte(filter.getPriceTo()));
             }
         }
@@ -110,7 +113,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
                 query.addCriteria(AggregationExpressionCriteria.whereExpr(
                     ComparisonOperators.valueOf("$salePrice").lessThan("$regularPrice")
                 ));
-            }else {
+            } else {
                 query.addCriteria(AggregationExpressionCriteria.whereExpr(
                     ComparisonOperators.valueOf("$salePrice").equalTo("$regularPrice")
                 ));
@@ -120,13 +123,24 @@ public class ProductQueryServiceImpl implements ProductQueryService {
         if (filter.getInStock() != null) {
             if (filter.getInStock()) {
                 query.addCriteria(Criteria.where("quantityInStock").gt(0));
-            }  else {
+            } else {
                 query.addCriteria(Criteria.where("quantityInStock").is(0));
             }
         }
 
         if (filter.getCategoriesId() != null && filter.getCategoriesId().length > 0) {
             query.addCriteria(Criteria.where("categoryId").in(Arrays.asList(filter.getCategoriesId())));
+        }
+
+        if (StringUtils.isNotBlank(filter.getTerm())) {
+            String regexExpression = String.format(findWordRegex, filter.getTerm());
+            query.addCriteria(
+                new Criteria().orOperator(
+                    Criteria.where("name").regex(regexExpression),
+                    Criteria.where("brand").regex(regexExpression),
+                    Criteria.where("description").regex(regexExpression)
+                )
+            );
         }
 
         return query;
