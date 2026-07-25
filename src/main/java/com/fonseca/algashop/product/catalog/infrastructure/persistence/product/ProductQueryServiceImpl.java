@@ -18,6 +18,7 @@ import org.springframework.data.mongodb.core.aggregation.AggregationExpressionCr
 import org.springframework.data.mongodb.core.aggregation.ComparisonOperators;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     private final ProductRepository productRepository;
     private final Mapper mapper;
     private final MongoOperations mongoOperations;
-//    private static final String findWordRegex = "(?i)(?<= |^)%s(?= |$)";
+    //    private static final String findWordRegex = "(?i)(?<= |^)%s(?= |$)";
     private static final String findWordRegex = "(?i)%s";
 
     @Override
@@ -73,6 +74,10 @@ public class ProductQueryServiceImpl implements ProductQueryService {
     }
 
     private Sort sortWith(ProductFilter filter) {
+
+        if (StringUtils.isNotBlank(filter.getTerm())) {
+            Sort.by("score");
+        }
 
         return Sort.by(filter.getSortDirectionOrDefault(), filter.getSortByPropertyOrDefault().getPropertyName());
     }
@@ -132,15 +137,19 @@ public class ProductQueryServiceImpl implements ProductQueryService {
             query.addCriteria(Criteria.where("categoryId").in(Arrays.asList(filter.getCategoriesId())));
         }
 
+//        if (StringUtils.isNotBlank(filter.getTerm())) {
+//            String regexExpression = String.format(findWordRegex, filter.getTerm());
+//            query.addCriteria(
+//                new Criteria().orOperator(
+//                    Criteria.where("name").regex(regexExpression),
+//                    Criteria.where("brand").regex(regexExpression),
+//                    Criteria.where("description").regex(regexExpression)
+//                )
+//            );
+//        }
+
         if (StringUtils.isNotBlank(filter.getTerm())) {
-            String regexExpression = String.format(findWordRegex, filter.getTerm());
-            query.addCriteria(
-                new Criteria().orOperator(
-                    Criteria.where("name").regex(regexExpression),
-                    Criteria.where("brand").regex(regexExpression),
-                    Criteria.where("description").regex(regexExpression)
-                )
-            );
+            query.addCriteria(TextCriteria.forDefaultLanguage().matching(filter.getTerm()));
         }
 
         return query;
