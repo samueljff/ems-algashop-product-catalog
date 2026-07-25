@@ -66,8 +66,8 @@ public class DataLoader implements ApplicationRunner {
         }
 
         try {
-            if (Boolean.TRUE.equals(properties.getAutoDrop())) {
-                mongoOperations.getCollection(collectionName).drop();
+            if (Boolean.TRUE.equals(properties.getAutoDelete())) {
+                mongoOperations.getCollection(collectionName).deleteMany(new Document());
             }
             return mongoOperations.insert(mongoDocs, collectionName).size();
         } catch (Exception e) {
