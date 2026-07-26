@@ -1,4 +1,4 @@
-package com.fonseca.algashop.product.catalog.infrastructure.utility;
+package com.fonseca.algashop.product.catalog.infrastructure.utility.converter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.converter.Converter;
