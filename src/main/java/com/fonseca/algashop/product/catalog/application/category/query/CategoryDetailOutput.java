@@ -12,9 +12,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryDetailOutput {
-
     private UUID id;
     private String name;
+    private String slug;
     private Boolean enabled;
-
 }

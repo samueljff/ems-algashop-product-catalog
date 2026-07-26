@@ -1,5 +1,6 @@
 package com.fonseca.algashop.product.catalog.contract.base;
 
+import com.fonseca.algashop.product.catalog.application.category.query.CategoryFilter;
 import com.fonseca.algashop.product.catalog.application.utility.PageModel;
 import com.fonseca.algashop.product.catalog.application.ResourceNotFoundException;
 import com.fonseca.algashop.product.catalog.application.category.managment.CategoryInput;
@@ -48,7 +49,7 @@ public class CategoryBase {
 
         RestAssuredMockMvc.enableLoggingOfRequestAndResponseIfValidationFails();
 
-        Mockito.when(categoryQueryService.filter(Mockito.anyInt(), Mockito.anyInt()))
+        Mockito.when(categoryQueryService.filter(any(CategoryFilter.class)))
                 .then((answer)-> {
                     Integer size = answer.getArgument(0);
                     return PageModel.<CategoryDetailOutput>builder()

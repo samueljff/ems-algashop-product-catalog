@@ -1,8 +1,10 @@
 package com.fonseca.algashop.product.catalog.infrastructure.utility.mapper;
 
+import com.fonseca.algashop.product.catalog.application.category.query.CategoryDetailOutput;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutput;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductSummaryOutput;
 import com.fonseca.algashop.product.catalog.application.utility.Mapper;
+import com.fonseca.algashop.product.catalog.domain.model.category.Category;
 import com.fonseca.algashop.product.catalog.domain.model.product.Product;
 import com.fonseca.algashop.product.catalog.infrastructure.utility.Slugfier;
 import org.apache.commons.lang3.StringUtils;
@@ -47,6 +49,11 @@ public class ModelMapperConfig {
                     mapping.using(fromStringToShortStringConverter)
                         .map(Product::getDescription, ProductSummaryOutput::setShortDescription);
                 }
+            );
+
+        modelMapper.createTypeMap(Category.class, CategoryDetailOutput.class)
+            .addMappings(mapping -> mapping.using(fromStringToSlugConverter)
+                .map(Category::getName, CategoryDetailOutput::setSlug)
             );
     }
 
