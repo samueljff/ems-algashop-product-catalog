@@ -45,26 +45,31 @@ public class CategoryBase {
     @BeforeEach
     void setUp() {
         RestAssuredMockMvc.mockMvc(MockMvcBuilders.webAppContextSetup(context)
-                .defaultResponseCharacterEncoding(StandardCharsets.UTF_8).build());
+            .defaultResponseCharacterEncoding(StandardCharsets.UTF_8).build());
 
         RestAssuredMockMvc.enableLoggingOfRequestAndResponseIfValidationFails();
 
-        Mockito.when(categoryQueryService.filter(any(CategoryFilter.class)))
-                .then((answer)-> {
-                    Integer size = answer.getArgument(0);
-                    return PageModel.<CategoryDetailOutput>builder()
-                            .number(0)
-                            .size(size)
-                            .totalPages(1)
-                            .totalElements(2)
-                            .content(
-                                    List.of(
-                                            CategoryOutputTestDataBuilder.aCategory().build(),
-                                            CategoryOutputTestDataBuilder.aCategoryAlt().build()
-                                    )
-                            ).build();
-                });
+        // Mock do método filter
+        Mockito.when(categoryQueryService.filter(Mockito.any(CategoryFilter.class)))
+            .thenAnswer(answer -> {
+                CategoryFilter filter = answer.getArgument(0); // captura o CategoryFilter
+                Integer size = filter.getSize();               // pega o size do filtro
+                Integer page = filter.getPage();               // pega o page do filtro
 
+                return PageModel.<CategoryDetailOutput>builder()
+                    .number(page)        // número da página
+                    .size(size)          // tamanho da página
+                    .totalPages(1)       // mock fixo
+                    .totalElements(2)    // mock fixo
+                    .content(
+                        List.of(
+                            CategoryOutputTestDataBuilder.aCategory().build(),
+                            CategoryOutputTestDataBuilder.aCategoryAlt().build()
+                        )
+                    ).build();
+            });
+
+        // Outros mocks auxiliares
         mockFindCategoryById(validCategoryId);
         mockCreateCategory();
         mockFindCategoryById(createdCategoryId);
