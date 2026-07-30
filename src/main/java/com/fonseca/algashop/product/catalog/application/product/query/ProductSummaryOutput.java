@@ -1,5 +1,6 @@
 package com.fonseca.algashop.product.catalog.application.product.query;
 
+import com.fonseca.algashop.product.catalog.infrastructure.utility.Slugfier;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,9 +25,11 @@ public class ProductSummaryOutput {
     private OffsetDateTime addedAt;
     private CategoryMinimalOutput category;
     private String shortDescription;
-    private String slug;
     private Boolean hasDiscount;
     private Integer quantityInStock;
     private Integer discountPercentageRounded;
     private Float score;
+    public String getSlug() {
+        return Slugfier.slugify(this.getName());
+    }
 }
