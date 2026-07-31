@@ -112,12 +112,12 @@ public class ProductQueryServiceImpl implements ProductQueryService {
             .and("discountPercentageRounded").as("discountPercentageRounded")
             .and("score").as("score")
             .and("category._id").as("category._id")
-            .and("category.name").as("category.name")
 
             .andExpression("salePrice < regularPrice").as("hasDiscount")
             .andExpression("quantityInStock > 0").as("inStock")
             .and(StringOperators.Substr.valueOf("description")
-                .substring(0, 50)).as("shortDescription");
+                .substring(0, 50)).as("shortDescription")
+            .and("category.name").as("category.name");
     }
 
     private Optional<Criteria> buildCriteria(ProductFilter filter) {
