@@ -1,4 +1,4 @@
-package com.fonseca.algashop.product.catalog.infrastructure.persistence;
+package com.fonseca.algashop.product.catalog.infrastructure.config;
 
 import org.bson.UuidRepresentation;
 import org.jspecify.annotations.Nullable;

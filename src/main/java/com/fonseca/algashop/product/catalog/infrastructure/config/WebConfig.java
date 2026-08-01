@@ -1,8 +1,8 @@
-package com.fonseca.algashop.product.catalog.presentation.webconfig;
+package com.fonseca.algashop.product.catalog.infrastructure.config;
 
-import com.fonseca.algashop.product.catalog.infrastructure.utility.converter.CategorySortTypeConverter;
-import com.fonseca.algashop.product.catalog.infrastructure.utility.converter.ProductSortTypeConverter;
-import com.fonseca.algashop.product.catalog.infrastructure.utility.converter.SortDirectionConverter;
+import com.fonseca.algashop.product.catalog.infrastructure.converter.CategorySortTypeConverter;
+import com.fonseca.algashop.product.catalog.infrastructure.converter.ProductSortTypeConverter;
+import com.fonseca.algashop.product.catalog.infrastructure.converter.SortDirectionConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

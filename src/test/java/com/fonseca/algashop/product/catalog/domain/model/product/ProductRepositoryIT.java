@@ -1,6 +1,6 @@
 package com.fonseca.algashop.product.catalog.domain.model.product;
 
-import com.fonseca.algashop.product.catalog.infrastructure.persistence.MongoConfig;
+import com.fonseca.algashop.product.catalog.infrastructure.config.MongoConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +8,6 @@ import org.springframework.boot.data.mongodb.test.autoconfigure.DataMongoTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-
-import java.util.List;
 
 @DataMongoTest
 @Import({MongoConfig.class})

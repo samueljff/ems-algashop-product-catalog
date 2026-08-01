@@ -1,8 +1,7 @@
-package com.fonseca.algashop.product.catalog.infrastructure.utility.mapper;
+package com.fonseca.algashop.product.catalog.infrastructure.config;
 
 import com.fonseca.algashop.product.catalog.application.category.query.CategoryDetailOutput;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutput;
-import com.fonseca.algashop.product.catalog.application.product.query.ProductSummaryOutput;
 import com.fonseca.algashop.product.catalog.application.utility.Mapper;
 import com.fonseca.algashop.product.catalog.domain.model.category.Category;
 import com.fonseca.algashop.product.catalog.domain.model.product.Product;

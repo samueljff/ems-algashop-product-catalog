@@ -1,4 +1,4 @@
-package com.fonseca.algashop.product.catalog.infrastructure.message;
+package com.fonseca.algashop.product.catalog.infrastructure.config;
 
 import com.fonseca.algashop.product.catalog.application.ApplicationMessagePublisher;
 import org.springframework.context.ApplicationEventPublisher;
