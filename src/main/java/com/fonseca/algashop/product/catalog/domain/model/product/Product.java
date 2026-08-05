@@ -109,14 +109,13 @@ public class Product extends AbstractAggregateRoot<Product> {
         Objects.requireNonNull(enabled);
         Boolean wasEnabled = this.enabled;
         this.enabled = enabled;
-        if (wasEnabled != null && wasEnabled && !this.getEnabled()) {
-            this.registerEvent(ProductDelistedEvent.builder()
-                .productId(this.getId())
-                .build());
-        } else if (wasEnabled != null && !wasEnabled && this.getEnabled()) {
-            this.registerEvent(ProductListedEvent.builder()
-                .productId(this.getId())
-                .build());
+        if (wasEnabled == null || wasEnabled.equals(enabled)) {
+            return;
+        }
+        if (enabled) {
+            registerEvent(ProductListedEvent.builder().productId(this.id).build());
+        } else {
+            registerEvent(ProductDelistedEvent.builder().productId(this.id).build());
         }
     }
 
