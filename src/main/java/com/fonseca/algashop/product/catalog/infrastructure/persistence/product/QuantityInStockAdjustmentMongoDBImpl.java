@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Component
@@ -21,27 +21,30 @@ public class QuantityInStockAdjustmentMongoDBImpl implements QuantityInStockAdju
     
     @Override
     public void increase(UUID productId, Integer quantity) {
-        changeStockQuantity(productId, quantity);
+        Query query = Query.query(Criteria.where("id").is(productId));
+        changeStockQuantity(productId, quantity, query);
     }
 
     @Override
     public void decrease(UUID productId, Integer quantity) {
-        changeStockQuantity(productId, quantity * -1);
+        Query query = Query.query(Criteria.where("id").is(productId)
+            .and("quantityInStock").gte(quantity));
+        changeStockQuantity(productId, quantity * -1, query);
     }
 
-    private void changeStockQuantity(UUID productId, Integer quantity) {
-        Query query = Query.query(Criteria.where("id").is(productId));
+    private void changeStockQuantity(UUID productId, Integer quantity, Query query) {
         Update update = new Update()
             .inc("quantityInStock", quantity)
             .inc("version", 1)
-            .set("updatedAt", LocalDateTime.now());
+            .set("updatedAt", OffsetDateTime.now());
 
         UpdateResult updateResult = mongoOperations.update(Product.class)
             .matching(query)
             .apply(update)
             .first();
+
         if (updateResult.getModifiedCount() < 1) {
-            throw new StockUpdateFailed("Product of id %s was not found");
+            throw new StockUpdateFailed(String.format("Product of id %s was not found", productId));
         }
     }
 }
