@@ -76,7 +76,7 @@ class QuantityInStockAdjustmentIT {
     @Test
     public void shouldCalculateResult() {
         Product product = productRepository.findById(existingProduct).orElseThrow();
-        var result = quantityInStockAdjustment.decrease(existingProduct, 40);
+        var result = quantityInStockAdjustment.decrease(product.getId(), 40);
         Assertions.assertThat(result.newQuantity()).isEqualTo(10);
         Assertions.assertThat(result.previousQuantity()).isEqualTo(50);
     }
