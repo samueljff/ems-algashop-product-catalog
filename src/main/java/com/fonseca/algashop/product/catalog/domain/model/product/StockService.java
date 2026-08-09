@@ -1,5 +1,6 @@
 package com.fonseca.algashop.product.catalog.domain.model.product;
 
+import com.fonseca.algashop.product.catalog.domain.model.DomainException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,14 @@ public class StockService {
             throw new IllegalArgumentException("Quantity must be greater than or equal to 1");
         }
 
-        var result = quantityInStockAdjustment.increase(product.getId(), quantity);
+        QuantityInStockAdjustment.Result result;
+        try {
+            result = quantityInStockAdjustment.increase(product.getId(), quantity);
+        } catch (Exception e) {
+            throw new DomainException(String.format("Failed to restock product %s", product.getId()));
+        }
 
-        if (result.inRestocked()){
+        if (result.inRestocked()) {
             domainEventPublisher.publish(ProductRestockedEvent.builder()
                 .productId(product.getId())
                 .build());
@@ -33,8 +39,15 @@ public class StockService {
         if (quantity < 1) {
             throw new IllegalArgumentException("Quantity must be greater than or equal to 1");
         }
-        var result = quantityInStockAdjustment.decrease(product.getId(), quantity);
-        if (result.isOutOfStock()){
+
+        QuantityInStockAdjustment.Result result;
+        try {
+            result = quantityInStockAdjustment.decrease(product.getId(), quantity);
+        } catch (Exception e) {
+            throw new DomainException(String.format("Failed to withdraw product %s from stock", product.getId()));
+        }
+
+        if (result.isOutOfStock()) {
             domainEventPublisher.publish(ProductSoldOutEvent.builder()
                 .productId(product.getId())
                 .build());
