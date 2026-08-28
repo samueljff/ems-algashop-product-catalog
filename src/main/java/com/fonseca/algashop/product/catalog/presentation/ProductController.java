@@ -10,9 +10,12 @@ import com.fonseca.algashop.product.catalog.domain.model.category.CategoryNotFou
 import com.fonseca.algashop.product.catalog.application.product.query.ProductFilter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.util.UUID;
 
 @RestController
@@ -54,9 +57,14 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ProductDetailOutput findBYId(@PathVariable UUID productId) {
+    public ResponseEntity<ProductDetailOutput> findBYId(@PathVariable UUID productId) {
 
-        return productQueryService.findById(productId);
+        ProductDetailOutput product = productQueryService.findById(productId);
+        return ResponseEntity.ok()
+            .cacheControl(CacheControl.maxAge(Duration.ofMillis(1)).cachePublic())
+            .eTag("product:id:" + product.getId() + ":v:" + product.getVersion())
+            .lastModified(product.getUpdatedAt().toInstant())
+            .body(product);
     }
 
     @GetMapping
