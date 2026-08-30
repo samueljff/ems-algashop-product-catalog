@@ -21,6 +21,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
+//@CrossOrigin("*")
 public class ProductController {
 
     private final ProductQueryService productQueryService;
