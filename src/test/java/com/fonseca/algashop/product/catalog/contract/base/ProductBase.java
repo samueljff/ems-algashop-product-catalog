@@ -88,8 +88,12 @@ public class ProductBase {
     }
 
     private void mockUpdateProduct() {
-        Mockito.doNothing().when(productManagementApplicationService)
-            .update(eq(validProductId), any(ProductInput.class));
+        ProductDetailOutput productDetailOutput = ProductDetailOutputTestDataBuilder.aProduct()
+            .id(validProductId).build();
+
+        Mockito.when(productManagementApplicationService
+                .update(eq(validProductId), any(ProductInput.class)))
+            .thenReturn(productDetailOutput);
     }
 
     private void mockInvalidProductFindById() {
