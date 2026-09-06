@@ -3,6 +3,7 @@ package com.fonseca.algashop.product.catalog.application.category.query;
 import com.fonseca.algashop.product.catalog.application.utility.PageModel;
 import org.springframework.cache.annotation.Cacheable;
 
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public interface CategoryQueryService {
@@ -11,4 +12,6 @@ public interface CategoryQueryService {
 
     @Cacheable(cacheNames = "algashop:categories:v1", key = "#categoryId")
     CategoryDetailOutput findById(UUID categoryId);
+
+    OffsetDateTime lasModified();
 }
