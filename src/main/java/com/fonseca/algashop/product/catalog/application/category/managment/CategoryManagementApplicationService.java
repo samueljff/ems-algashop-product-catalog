@@ -1,30 +1,36 @@
 package com.fonseca.algashop.product.catalog.application.category.managment;
 
 import com.fonseca.algashop.product.catalog.application.ApplicationMessagePublisher;
-import com.fonseca.algashop.product.catalog.application.ResourceNotFoundException;
 import com.fonseca.algashop.product.catalog.application.category.event.CategoryUpdatedEvent;
 import com.fonseca.algashop.product.catalog.domain.model.category.Category;
 import com.fonseca.algashop.product.catalog.domain.model.category.CategoryNotFoundException;
 import com.fonseca.algashop.product.catalog.domain.model.category.CategoryRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryManagementService {
+public class CategoryManagementApplicationService {
 
     private final CategoryRepository categoryRepository;
     private final ApplicationMessagePublisher  applicationMessagePublisher;
 
+    @CacheEvict(cacheNames = "algashop:categories-filter:v1", key = "'default'")
     public UUID create(@Valid CategoryInput input) {
         Category category = new Category(input.getName(), input.getEnabled());
         categoryRepository.save(category);
         return category.getId();
     }
 
+   @Caching(evict = {
+       @CacheEvict(cacheNames = "algashop:categories-filter:v1", key = "'default'"),
+       @CacheEvict(cacheNames = "algashop:categories:v1", key = "#categoryId")
+   })
     public void update(UUID categoryId, CategoryInput input) {
         Category category = categoryRepository.findById(categoryId)
             .orElseThrow(() -> new CategoryNotFoundException(categoryId));

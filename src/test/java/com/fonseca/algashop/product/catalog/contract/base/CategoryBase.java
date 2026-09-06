@@ -4,7 +4,7 @@ import com.fonseca.algashop.product.catalog.application.category.query.CategoryF
 import com.fonseca.algashop.product.catalog.application.utility.PageModel;
 import com.fonseca.algashop.product.catalog.application.ResourceNotFoundException;
 import com.fonseca.algashop.product.catalog.application.category.managment.CategoryInput;
-import com.fonseca.algashop.product.catalog.application.category.managment.CategoryManagementService;
+import com.fonseca.algashop.product.catalog.application.category.managment.CategoryManagementApplicationService;
 import com.fonseca.algashop.product.catalog.application.category.query.CategoryDetailOutput;
 import com.fonseca.algashop.product.catalog.application.category.query.CategoryOutputTestDataBuilder;
 import com.fonseca.algashop.product.catalog.application.category.query.CategoryQueryService;
@@ -35,7 +35,7 @@ public class CategoryBase {
     private CategoryQueryService categoryQueryService;
 
     @MockitoBean
-    private CategoryManagementService categoryManagementService;
+    private CategoryManagementApplicationService categoryManagementService;
 
     public static final UUID validCategoryId = UUID.fromString("a3c91d7f-52be-4e8a-b017-9f2e847d1c34");
     public static final UUID invalidCategoryId = UUID.fromString("00000000-0000-0000-0000-000000000000");

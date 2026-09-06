@@ -1,7 +1,7 @@
 package com.fonseca.algashop.product.catalog.presentation;
 
 import com.fonseca.algashop.product.catalog.application.category.managment.CategoryInput;
-import com.fonseca.algashop.product.catalog.application.category.managment.CategoryManagementService;
+import com.fonseca.algashop.product.catalog.application.category.managment.CategoryManagementApplicationService;
 import com.fonseca.algashop.product.catalog.application.category.query.CategoryDetailOutput;
 import com.fonseca.algashop.product.catalog.application.category.query.CategoryFilter;
 import com.fonseca.algashop.product.catalog.application.category.query.CategoryQueryService;
@@ -19,7 +19,7 @@ import java.util.UUID;
 public class CategoryController {
 
     private final CategoryQueryService categoryQueryService;
-    private final CategoryManagementService categoryManagementService;
+    private final CategoryManagementApplicationService categoryManagementService;
 
     @GetMapping
     public PageModel<CategoryDetailOutput> filter(CategoryFilter  categoryFilter) {
