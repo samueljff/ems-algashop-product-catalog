@@ -102,8 +102,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
             .andExpression("salePrice < regularPrice").as("hasDiscount")
             .andExpression("quantityInStock > 0").as("inStock")
             .and(StringOperators.Substr.valueOf("description")
-                .substring(0, 50)).as("shortDescription")
-            .and("category.name").as("category.name");
+                .substring(0, 50)).as("shortDescription");
     }
 
     private Optional<Criteria> buildCriteria(ProductFilter filter) {
