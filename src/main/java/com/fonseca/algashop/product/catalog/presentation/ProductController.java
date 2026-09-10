@@ -3,11 +3,11 @@ package com.fonseca.algashop.product.catalog.presentation;
 import com.fonseca.algashop.product.catalog.application.product.management.ProductInput;
 import com.fonseca.algashop.product.catalog.application.product.management.ProductManagementApplicationService;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductDetailOutput;
+import com.fonseca.algashop.product.catalog.application.product.query.ProductFilter;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductQueryService;
 import com.fonseca.algashop.product.catalog.application.product.query.ProductSummaryOutput;
 import com.fonseca.algashop.product.catalog.application.utility.PageModel;
 import com.fonseca.algashop.product.catalog.domain.model.category.CategoryNotFoundException;
-import com.fonseca.algashop.product.catalog.application.product.query.ProductFilter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.CacheControl;
@@ -62,7 +62,7 @@ public class ProductController {
             return ResponseEntity.badRequest().build();
         }
 
-        if (Math.random() < 0.6) {
+        if (Math.random() < 0.5) {
             try {
                 Thread.sleep(Duration.ofSeconds(20));
             } catch (Exception e) {
