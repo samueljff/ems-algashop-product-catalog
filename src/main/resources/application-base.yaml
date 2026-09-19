@@ -33,6 +33,5 @@ management:
       group:
         readiness:
           include: mongo,readinessState
-
 info:
   app.name: Algashop Product Catalog
