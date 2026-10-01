@@ -32,4 +32,5 @@ public class ProductSummaryOutput {
     public String getSlug() {
         return Slugfier.slugify(this.getName());
     }
+    private ImageOutput mainImage;
 }

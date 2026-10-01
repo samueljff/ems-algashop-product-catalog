@@ -31,4 +31,5 @@ public class ProductDetailOutput implements Serializable {
     private Integer discountPercentageRounded;
     private Long version;
     private OffsetDateTime updatedAt;
+    private ImageOutput mainImage;
 }
