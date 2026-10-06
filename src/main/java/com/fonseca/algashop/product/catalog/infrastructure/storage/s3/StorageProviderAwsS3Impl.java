@@ -52,13 +52,24 @@ public class StorageProviderAwsS3Impl implements StorageProvider {
                 fileReference.getContentType().toString()
             );
         } catch (S3Exception e) {
-            throw new StorageProviderException(String.format("Unknown error when tried to create presigned URL for file %s", key), e);
+            throw new StorageProviderException(String
+                .format("Unknown error when tried to create presigned URL for file %s", key), e);
         }
     }
 
     @Override
     public void deleteFile(String remoteFileName) {
+        if (!fileExists(remoteFileName)) {
+            throw new StorageProviderException(String
+                .format("Remote File %s was not found!", remoteFileName));
+        }
 
+        try {
+            s3Template.deleteObject(properties.getBucketName(), remoteFileName);
+        }  catch (S3Exception e) {
+            throw new StorageProviderException(String
+                .format("Unknown error when tried to remove the file %s", remoteFileName));
+        }
     }
 
     @Override
