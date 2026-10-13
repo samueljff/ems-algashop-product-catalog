@@ -3,7 +3,6 @@ spring:
     type: REDIS
   mongodb:
     uri: mongodb://localhost:27017,localhost:27018,localhost:27019/product_catalog?replicaSet=rs0
-
   data:
     redis:
       host: localhost
@@ -22,6 +21,12 @@ spring:
       s3:
         enabled: true
         path-style-access-enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:8081
+#          jwk-set-uri: http://127.0.0.1:8081/oauth2/jwks
 
 logging:
   level:
