@@ -8,6 +8,7 @@ import com.fonseca.algashop.product.catalog.application.product.query.ProductQue
 import com.fonseca.algashop.product.catalog.application.product.query.ProductSummaryOutput;
 import com.fonseca.algashop.product.catalog.application.utility.PageModel;
 import com.fonseca.algashop.product.catalog.domain.model.category.CategoryNotFoundException;
+import com.fonseca.algashop.product.catalog.infrastructure.security.SecurityAnnotations.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.CacheControl;
@@ -22,7 +23,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
-//@CrossOrigin("*")
 public class ProductController {
 
     private final ProductQueryService productQueryService;
@@ -30,7 +30,7 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('SCOPE_products:write')")
+    @CanWriteProducts
     public ProductDetailOutput create(@RequestBody @Valid ProductInput input) {
         UUID productId;
         try {
@@ -41,27 +41,27 @@ public class ProductController {
     }
 
     @PutMapping("/{productId}")
-    @PreAuthorize("hasAuthority('SCOPE_products:write')")
+    @CanWriteProducts
     public ProductDetailOutput update(@PathVariable UUID productId, @RequestBody @Valid ProductInput input) {
         return productManagementApplicationService.update(productId, input);
     }
 
     @PutMapping("/{productId}/enable")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('SCOPE_products:write')")
+    @CanWriteProducts
     public void enable(@PathVariable UUID productId) {
         productManagementApplicationService.enable(productId);
     }
 
     @DeleteMapping("/{productId}/enable")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('SCOPE_products:write')")
+    @CanWriteProducts
     public void disable(@PathVariable UUID productId) {
         productManagementApplicationService.disable(productId);
     }
 
     @GetMapping("/{productId}")
-    @PreAuthorize("hasAuthority('SCOPE_products:read')")
+    @CanReadProducts
     public ResponseEntity<ProductDetailOutput> findBYId(@PathVariable UUID productId) {
         ProductDetailOutput product = productQueryService.findById(productId);
         return ResponseEntity.ok()
@@ -72,7 +72,7 @@ public class ProductController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAuthority('SCOPE_products:read')")
+    @CanReadProducts
     public PageModel<ProductSummaryOutput> filter(ProductFilter productFilter) {
 
         return productQueryService.filter(productFilter);
@@ -80,14 +80,14 @@ public class ProductController {
 
     @PostMapping("/{productId}/restock")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('SCOPE_products:stock:write')")
+    @CanWriteProductsStock
     public void restock(@PathVariable UUID productId, @RequestBody @Valid ProductQuantityModel productQuantityModel) {
         productManagementApplicationService.restock(productId, productQuantityModel.getQuantity());
     }
 
     @PostMapping("/{productId}/withdraw")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PreAuthorize("hasAuthority('SCOPE_products:stock:write')")
+    @CanWriteProductsStock
     public void withdraw(@PathVariable UUID productId, @RequestBody @Valid ProductQuantityModel productQuantityModel) {
         productManagementApplicationService.withdraw(productId, productQuantityModel.getQuantity());
     }
