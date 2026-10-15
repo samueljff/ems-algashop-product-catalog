@@ -73,7 +73,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     public ProblemDetail handleException(Exception e) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         problemDetail.setTitle("Internal Server Error");
-        problemDetail.setDetail(e.getMessage());
+        problemDetail.setDetail("An unexpected internal error occurred.");
         problemDetail.setType(URI.create("/errors/internal-server-error"));
         return problemDetail;
     }
