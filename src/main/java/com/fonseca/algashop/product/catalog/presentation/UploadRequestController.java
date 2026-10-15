@@ -3,6 +3,7 @@ package com.fonseca.algashop.product.catalog.presentation;
 import com.fonseca.algashop.product.catalog.application.upload.UploadRequestApplicationService;
 import com.fonseca.algashop.product.catalog.application.upload.UploadRequestInput;
 import com.fonseca.algashop.product.catalog.application.upload.UploadResponseOutput;
+import com.fonseca.algashop.product.catalog.infrastructure.security.SecurityAnnotations.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ public class UploadRequestController {
     private final UploadRequestApplicationService uploadRequestApplicationService;
 
     @PostMapping
+    @CanWriteProducts
     public UploadResponseOutput requestUpload(@RequestBody @Valid UploadRequestInput input) {
         return uploadRequestApplicationService.requestPreSignedUrl(input);
     }

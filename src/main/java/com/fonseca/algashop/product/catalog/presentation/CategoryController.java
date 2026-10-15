@@ -6,6 +6,7 @@ import com.fonseca.algashop.product.catalog.application.category.query.CategoryD
 import com.fonseca.algashop.product.catalog.application.category.query.CategoryFilter;
 import com.fonseca.algashop.product.catalog.application.category.query.CategoryQueryService;
 import com.fonseca.algashop.product.catalog.application.utility.PageModel;
+import com.fonseca.algashop.product.catalog.infrastructure.security.SecurityAnnotations.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.CacheControl;
@@ -27,6 +28,7 @@ public class CategoryController {
     private final CategoryManagementApplicationService categoryManagementService;
 
     @GetMapping
+    @CanReadCategories
     public ResponseEntity<PageModel<CategoryDetailOutput>> filter(CategoryFilter  categoryFilter, WebRequest webRequest) {
 
         if (!categoryFilter.isCacheable()) {
@@ -49,12 +51,14 @@ public class CategoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @CanWriteCategories
     public CategoryDetailOutput create(@RequestBody @Valid CategoryInput input) {
         UUID categoryId = categoryManagementService.create(input);
         return categoryQueryService.findById(categoryId);
     }
 
     @GetMapping("/{categoryId}")
+    @CanReadCategories
     public ResponseEntity<CategoryDetailOutput> findById(@PathVariable UUID categoryId) {
         CategoryDetailOutput category = categoryQueryService.findById(categoryId);
         return ResponseEntity.ok()
@@ -65,6 +69,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{categoryId}")
+    @CanWriteCategories
     public CategoryDetailOutput update(@PathVariable UUID categoryId, @RequestBody @Valid CategoryInput input) {
         categoryManagementService.update(categoryId, input);
         return categoryQueryService.findById(categoryId);
@@ -72,6 +77,7 @@ public class CategoryController {
 
     @DeleteMapping("/{categoryId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @CanWriteCategories
     public void disable(@PathVariable UUID categoryId) {
         categoryManagementService.disable(categoryId);
     }
